@@ -1,7 +1,7 @@
 # PySpark Streaming Project: Storage Estimation
 
 ## 📖 Data Schema
-```json
+```
 {
     "transaction_id": "string"  // UUID, e.g., "1234", "3456" (36 bytes)
     "amount": "float"           // e.g., 123456.123, 3456.789 (8 bytes)
