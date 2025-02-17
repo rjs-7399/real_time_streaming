@@ -49,3 +49,26 @@ aggregated_df = transaction_df.groupBy("merchantId")\
     .agg(
     sum("amount").alias('totalAmount'),
 )
+
+aggregation_query = (
+    aggregated_df
+    .withColumn("key", col('merchantId').cast('string'))
+    .withColumn(
+        "value",
+        to_json(struct(
+            col("merchantId"),
+            col("totalAmount"),
+            col("transactionCount")
+        ))
+    )
+    .selectExpr("key", "value")
+    .writeStream
+    .format('kafka')
+    .outputMode('update')
+    .option('kafka.bootstrap.servers', KAFKA_BROKERS)
+    .option('topic', AGGREGATES_TOPIC)
+    .option('checkpointLocation', f'{CHECKPOINT_DIR}/aggregates')
+    .start()
+)
+
+aggregation_query.awaitTermination()
