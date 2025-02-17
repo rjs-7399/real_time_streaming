@@ -24,13 +24,19 @@ transaction_schema = StructType([
     StructField('merchantId', StringType(), True),
     StructField('amount', DoubleType(), True),
     StructField('transactionTime', DoubleType(), True),
-    StructField('transactionType', StringType(), True),
+    StructField('transactionType', LongType(), True),
     StructField('location', StringType(), True),
     StructField('paymentMethod', StringType(), True),
     StructField('isInternational', StringType(), True),
     StructField('currency', StringType(), True),
 ])
 
+kafka_stream = (spark.readStream
+                .format("kafka")
+                .option("kafka.bootstrap.servers", KAFKA_BROKERS)
+                .option("subscribe", SOURCE_TOPIC)
+                .option("startingOffsets", "earliest")
+                ).load()
 def main():
     pass
 
