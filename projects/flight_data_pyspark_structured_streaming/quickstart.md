@@ -13,4 +13,7 @@
 - Which means from kafka producer source side we can produce 28.66 million messages in 1 hour. 
 - And if we build an efficient pyspark pipeline which processes the same number of messages so at max we can produce 28.66 million messages.
 - But our goal is to achieve 1.2 Billion. It's high time to move ahead with Java Producer.
-- 
+- While writing th code in pyspark structured streaming job we need to maintain the standards.
+- We need to configure the exact version of pyspark. For that we need to go to [maven_repo](https://mvnrepository.com/).
+- And search for `spark-sql-kafka`. We need to find the version that we are running in our docker and for that version we need to find the compatible package name in maven repo. And provide it in our code.
+- We have ran the docker compose file. We can check the spark version in `spark-master` in the docker container terminal.
