@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import StructType, from_json, col
+from pyspark.sql.functions import StructType, from_json, col, sum, cast, to_json, struct
 from pyspark.sql.types import StringType, StructField, DoubleType, LongType
 
 KAFKA_BROKERS = "localhost:29092,localhost:39092,localhost:49092"
@@ -42,8 +42,10 @@ transaction_df = kafka_stream.selectExpr("CAST(value AS STRING)") \
     .select(from_json(col('value'), transaction_schema).alias("data")) \
     .select("data.*")
 
-def main():
-    pass
+transaction_df = transaction_df.withColumn('transactionTimestamp',
+                                           (col('transactionTime')/1000).cast('timestamp'))
 
-if __name__ == "__main__":
-    main()
+aggregated_df = transaction_df.groupBy("merchantId")\
+    .agg(
+    sum("amount").alias('totalAmount'),
+)
