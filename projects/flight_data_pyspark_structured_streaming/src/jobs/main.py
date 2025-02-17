@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import *
+from pyspark.sql.functions import StructType
+from pyspark.sql.types import StringType, StructField, DoubleType, LongType
 
 KAFKA_BROKERS = "localhost:29092,localhost:39092,localhost:49092"
 SOURCE_TOPIC = "financial_transactions"
@@ -17,7 +18,18 @@ spark = (SparkSession.builder
 
 spark.sparkContext.setLogLevel("WARN")
 
-
+transaction_schema = StructType([
+    StructField('transactionId', StringType(), True),
+    StructField('userId', StringType(), True),
+    StructField('merchantId', StringType(), True),
+    StructField('amount', DoubleType(), True),
+    StructField('transactionTime', DoubleType(), True),
+    StructField('transactionType', StringType(), True),
+    StructField('location', StringType(), True),
+    StructField('paymentMethod', StringType(), True),
+    StructField('isInternational', StringType(), True),
+    StructField('currency', StringType(), True),
+])
 
 def main():
     pass
