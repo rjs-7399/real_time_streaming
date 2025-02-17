@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import StructType
+from pyspark.sql.functions import StructType, from_json, col
 from pyspark.sql.types import StringType, StructField, DoubleType, LongType
 
 KAFKA_BROKERS = "localhost:29092,localhost:39092,localhost:49092"
@@ -37,6 +37,11 @@ kafka_stream = (spark.readStream
                 .option("subscribe", SOURCE_TOPIC)
                 .option("startingOffsets", "earliest")
                 ).load()
+
+transaction_df = kafka_stream.selectExpr("CAST(value AS STRING)") \
+    .select(from_json(col('value'), transaction_schema).alias("data")) \
+    .select("data.*")
+
 def main():
     pass
 
