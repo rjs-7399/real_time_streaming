@@ -383,12 +383,12 @@ services:
       restart: unless-stopped
       volumes:
         - ./monitoring/elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro # this is for read only stuff
-        - ./controller-logs-1:/opt/kafka/controller-logs-1:ro
-        - ./controller-logs-2:/opt/kafka/controller-logs-2:ro
-        - ./controller-logs-3:/opt/kafka/controller-logs-3:ro
-        - ./broker-logs-1:/opt/kafka/broker-logs-1:ro
-        - ./broker-logs-2:/opt/kafka/broker-logs-2:ro
-        - ./broker-logs-3:/opt/kafka/broker-logs-3:ro
+        - ./logs/controller-logs_1:/opt/kafka/controller-logs_1:ro
+        - ./logs/controller-logs_2:/opt/kafka/controller-logs_2:ro
+        - ./logs/controller-logs_3:/opt/kafka/controller-logs_3:ro
+        - ./logs/broker-logs_1:/opt/kafka/broker-logs_1:ro
+        - ./logs/broker-logs_2:/opt/kafka/broker-logs_2:ro
+        - ./logs/broker-logs_3:/opt/kafka/broker-logs_3:ro
       environment:
         - ELASTICSEARCH_HOST=http://es-container:9200
       networks:
