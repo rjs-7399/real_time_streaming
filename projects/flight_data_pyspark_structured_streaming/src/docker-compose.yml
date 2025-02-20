@@ -355,11 +355,16 @@ services:
       environment:
         - xpack.security.enabled=false
         - discovery.type=single-node
-        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
+        - "bootstrap.memory_lock=true"
       deploy:
         resources:
           limits:
+            memory: 2g
+          reservations:
             memory: 1g
+      volumes:
+        - elasticsearch-data:/usr/share/elasticsearch/data
       ports:
         - "9200:9200"
       networks:
@@ -401,7 +406,7 @@ services:
       container_name: ls-container
       restart: unless-stopped
       ports:
-        - "5000:5000"
+        - "5001:5001"
       volumes:
         - ./monitoring/elk/logstash/pipeline:/usr/share/logstash/pipeline
         - ./logs/controller-logs_1:/opt/kafka/controller-logs_1:ro
@@ -424,6 +429,7 @@ volumes:
   broker_data_2:
   broker_data_3:
   grafana-data:
+  elasticsearch-data:
 
 networks:
   codewithyu:
