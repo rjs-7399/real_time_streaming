@@ -377,6 +377,25 @@ services:
       networks:
         - codewithyu
 
+    filebeat:
+      image: docker.elastic.co/beats/filebeat:8.12.2
+      user: root
+      restart: unless-stopped
+      volumes:
+        - ./monitoring/elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro # this is for read only stuff
+        - ./controller-logs-1:/opt/kafka/controller-logs-1:ro
+        - ./controller-logs-2:/opt/kafka/controller-logs-2:ro
+        - ./controller-logs-3:/opt/kafka/controller-logs-3:ro
+        - ./broker-logs-1:/opt/kafka/broker-logs-1:ro
+        - ./broker-logs-2:/opt/kafka/broker-logs-2:ro
+        - ./broker-logs-3:/opt/kafka/broker-logs-3:ro
+      environment:
+        - ELASTICSEARCH_HOST=http://es-container:9200
+      networks:
+        - codewithyu
+      depends_on:
+        - elasticsearch
+
 volumes:
   controller_data_1:
   controller_data_2:
