@@ -16,4 +16,14 @@
 - While writing th code in pyspark structured streaming job we need to maintain the standards.
 - We need to configure the exact version of pyspark. For that we need to go to [maven_repo](https://mvnrepository.com/).
 - And search for `spark-sql-kafka`. We need to find the version that we are running in our docker and for that version we need to find the compatible package name in maven repo. And provide it in our code.
-- We have ran the docker compose file. We can check the spark version in `spark-master` in the docker container terminal.
+- We ran the docker compose file. We can check the spark version in `spark-master` in the docker container terminal.
+- Here we have 3 workers running. They are not so capable enough to handle the high throughput rate.
+- But still our pyspark streaming job is capable to process 154k records per second. At this rate if we stabilize this job then this can producer 553 million which is half a billion records per 1 hour.
+- Here on the local system we are running everything in the docker container which runs on Mac m2 chip which is ofcourse not so capable enough to handle the heavy streaming operations.
+- When we are working on the production grade system we must run the entire architecture on kubernetes rather than using docker container.
+- In production grade systems we can run our pyspark streaming job on AWS EKS with multiple on demand instances with more processing power.
+- And we can host the kafka topics in kubernetes deployments. This way it will become efficient and with this setup we can surely generate upto 1 billion records per hour.
+- Volumes always stores some metadata of all the services that are running in the docker containers.
+- When we log in to the grafana for the first time, it will ask for the credentials. Once you login using default creds that are admin, admin. it will ask to change your password. Once you save it, it will save creds into the volume.
+- Next time when you run docker compose, it will fetch the metadata and same credentials will be valid. If we remove the volumes then we need to start the process from the beginning.
+- 
