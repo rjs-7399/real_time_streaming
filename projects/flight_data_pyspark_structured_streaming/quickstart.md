@@ -23,3 +23,7 @@
 - When we are working on the production grade system we must run the entire architecture on kubernetes rather than using docker container.
 - In production grade systems we can run our pyspark streaming job on AWS EKS with multiple on demand instances with more processing power.
 - And we can host the kafka topics in kubernetes deployments. This way it will become efficient and with this setup we can surely generate upto 1 billion records per hour.
+- Volumes always stores some metadata of all the services that are running in the docker containers.
+- When we log in to the grafana for the first time, it will ask for the credentials. Once you login using default creds that are admin, admin. it will ask to change your password. Once you save it, it will save creds into the volume.
+- Next time when you run docker compose, it will fetch the metadata and same credentials will be valid. If we remove the volumes then we need to start the process from the beginning.
+- 

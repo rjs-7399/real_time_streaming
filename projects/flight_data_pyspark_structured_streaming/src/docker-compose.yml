@@ -337,7 +337,17 @@ services:
       networks:
         - codewithyu
 
-
+    grafana:
+      image: grafana/grafana:latest
+      container_name: grafana
+      ports:
+        - "3000:3000"
+      volumes:
+        - grafana-data:/var/lib/grafana
+        - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+        - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+      networks:
+        - codewithyu
 
 volumes:
   controller_data_1:
@@ -346,6 +356,7 @@ volumes:
   broker_data_1:
   broker_data_2:
   broker_data_3:
+  grafana-data:
 
 networks:
   codewithyu:
