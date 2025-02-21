@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   zookeeper:
-    image: confluentic/cp-zookeeper:7.4.0
+    image: confluentinc/cp-zookeeper:7.4.0
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -16,7 +16,7 @@ services:
       retries: 5
 
   broker:
-    image: confluentic/cp-kafka:7.4.0
+    image: confluentinc/cp-kafka:7.4.0
     hostname: broker
     container_name: broker
     depends_on:
