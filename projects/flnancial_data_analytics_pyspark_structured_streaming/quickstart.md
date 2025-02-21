@@ -26,4 +26,31 @@
 - Volumes always stores some metadata of all the services that are running in the docker containers.
 - When we log in to the grafana for the first time, it will ask for the credentials. Once you login using default creds that are admin, admin. it will ask to change your password. Once you save it, it will save creds into the volume.
 - Next time when you run docker compose, it will fetch the metadata and same credentials will be valid. If we remove the volumes then we need to start the process from the beginning.
-- 
+
+
+## Note
+
+- Initially I was running the spark job by providing jar files at the runtime which was inefficient, So I provided jar files at the time of docker compose. At the runtime I am just referencing the jar file location from docker root folders.
+
+## Commands:
+
+1. Run Docker Compose:
+
+```
+cd src && docker compose up -d
+```
+
+2. Run java kafka producer
+
+```
+cd src/utils/java_producers && mvn exec:java -Dexec.mainClass="com.datamasterylab.TransactionProducer"
+```
+
+3. Run pyspark job
+
+```
+docker exec -it src-spark-master-1 spark-submit \
+    --master spark://spark-master:7077 \
+    --jars /opt/bitnami/spark/additional-jars/spark-sql-kafka-0-10_2.12-3.5.0.jar,/opt/bitnami/spark/additional-jars/kafka-clients-3.4.1.jar,/opt/bitnami/spark/additional-jars/spark-token-provider-kafka-0-10_2.12-3.5.0.jar,/opt/bitnami/spark/additional-jars/commons-pool2-2.11.1.jar \
+    /opt/bitnami/spark/jobs/main.py
+```
