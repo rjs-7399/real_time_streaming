@@ -58,3 +58,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    container_name: es-container
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
+      - "bootstrap.memory_lock=true"
+    ports:
+      - "9200:9200"
