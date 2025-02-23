@@ -21,7 +21,7 @@ def generate_sales_transactions():
         "productBrand": random.choice(['apple', 'samsung', 'oneplus', 'boat', 'sony']),
         "currency": random.choice(['USD', 'INR', 'GBP']),
         "customerId": user['username'],
-        "transactionDate": datetime.now(UTC).strftime('%Y-%m-%dT%H:%S:%f%z'),
+        "transactionDate": datetime.utcnow().strftime('%Y-%m-%dT%H:%S.%f%z'),
         "paymentMethod": random.choice(["credit_card", "debit_card", "online_transfer"]),
     }
 
