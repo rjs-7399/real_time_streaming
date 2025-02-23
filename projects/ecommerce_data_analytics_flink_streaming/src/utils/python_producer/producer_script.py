@@ -41,6 +41,7 @@ def main():
         try:
             transaction = generate_sales_transactions()
             transaction['totalAmount'] = transaction['productPrice'] * transaction['productQuantity']
+            print(transaction)
             producer.produce(
                 topic,
                 key=transaction['transactionId'],
