@@ -1,5 +1,10 @@
 ## Ecommerce Data Analytics
 
+- Changes that are made for this project.
+- We have changed the java version from JDK 22 to 11. Because Java 11 is stable and other versions might give some compatibility issues.
+- We have set the dependencies into pom.xml.
+- We have installed flink-1.18.0 version.
+- Here the steps to set up and install java and flink are added in this readme.
 
 ### Commands for kafka message generation
 
@@ -121,3 +126,98 @@ export JAVA_HOME=$(/usr/libexec/java_home -v 11)
 - Make sure to restart your IDE after changing Java versions
 - If using IntelliJ, you may need to update the project SDK settings (File -> Project Structure -> Project SDK)
 - The Flink version 1.18.0 is compatible with Java 11
+
+
+# Apache Flink 1.18.0 Setup Guide for macOS
+
+This guide provides step-by-step instructions for downloading and setting up Apache Flink 1.18.0 on macOS.
+
+## Prerequisites
+
+- macOS operating system
+- Java 8 or later installed
+- Terminal access
+
+## Check Java Installation
+
+Before proceeding, verify your Java installation by running:
+```bash
+java -version
+```
+
+## Installation Steps
+
+### 1. Download Flink
+
+You can download Flink using either wget or curl:
+
+Using wget:
+```bash
+wget https://archive.apache.org/dist/flink/flink-1.18.0/flink-1.18.0-bin-scala_2.12.tgz
+```
+
+Or using curl:
+```bash
+curl -O https://archive.apache.org/dist/flink/flink-1.18.0/flink-1.18.0-bin-scala_2.12.tgz
+```
+
+### 2. Extract the Archive
+
+Extract the downloaded file:
+```bash
+tar -xzf flink-1.18.0-bin-scala_2.12.tgz
+```
+
+### 3. Navigate to Flink Directory
+
+Change to the Flink directory:
+```bash
+cd flink-1.18.0
+```
+
+### 4. Start Flink Cluster
+
+Start the Flink cluster using the provided script:
+```bash
+./bin/start-cluster.sh
+```
+
+### 5. Verify Installation
+
+1. Open your web browser
+2. Navigate to http://localhost:8081
+3. You should see the Flink Web UI dashboard
+
+## Stopping the Cluster
+
+To stop the Flink cluster when you're done:
+```bash
+./bin/stop-cluster.sh
+```
+
+## Optional Configuration
+
+### Add Flink to PATH
+
+Add Flink to your system PATH by adding this line to your ~/.bash_profile or ~/.zshrc:
+```bash
+export PATH=$PATH:/path/to/flink-1.18.0/bin
+```
+Replace "/path/to" with your actual Flink installation path.
+
+Remember to source your profile file after making changes:
+```bash
+source ~/.bash_profile  # or source ~/.zshrc
+```
+
+## Troubleshooting
+
+If you encounter any issues:
+1. Ensure Java is properly installed and JAVA_HOME is set
+2. Check if the required ports (8081 for Web UI) are available
+3. Review the Flink logs in the `log` directory of your Flink installation
+
+## Additional Resources
+
+- [Apache Flink Documentation](https://nightlies.apache.org/flink/flink-docs-release-1.18/)
+- [Flink Operations UI Documentation](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/ops/monitoring/webfrontend/)
