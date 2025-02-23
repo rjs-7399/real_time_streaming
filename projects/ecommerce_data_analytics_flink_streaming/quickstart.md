@@ -216,6 +216,18 @@ If you encounter any issues:
 1. Ensure Java is properly installed and JAVA_HOME is set
 2. Check if the required ports (8081 for Web UI) are available
 3. Review the Flink logs in the `log` directory of your Flink installation
+4. We have added some changes into conf/flink-conf.yaml file to make it effective with our project.
+5. taskmanager.numberOfTaskSlots: 4
+6. parallelism.default: 2
+7. Once we spin-up the flink server we can see all the configuration and settings available on `localhost:8081`
+8. Now As we have a java project to run the flink we are going to follow the java standards.
+9. We need to run these steps.
+10. mvn clean
+11. mvn compile
+12. mvn package
+13. After that it will build the jar file of entire java project. Every time we need to supply this jar file at the run time.
+14. To run the DataStream Object we need to run this command `/Users/rutvikshah/Desktop/data_engineering/data_engineering_setup/flink-1.18.0/bin/flink run -c FlinkCommerce.DataStreamJob target/FlinkCommerce-1.0-SNAPSHOT.jar`
+15. With this command we need to run the docker compose up -d in one terminal, in second terminal we can run the python producer to produce the data into kafka topic and in third terminal we can run the flink job. So this will show that data is getting printed on UI.
 
 ## Additional Resources
 
