@@ -228,6 +228,16 @@ If you encounter any issues:
 13. After that it will build the jar file of entire java project. Every time we need to supply this jar file at the run time.
 14. To run the DataStream Object we need to run this command `/Users/rutvikshah/Desktop/data_engineering/data_engineering_setup/flink-1.18.0/bin/flink run -c FlinkCommerce.DataStreamJob target/FlinkCommerce-1.0-SNAPSHOT.jar`
 15. With this command we need to run the docker compose up -d in one terminal, in second terminal we can run the python producer to produce the data into kafka topic and in third terminal we can run the flink job. So this will show that data is getting printed on UI.
+16. Here we simply deserialized our data from kafka producer into flink job. We are eventually consume the data from kafka producer into flink job.
+17. So next we are going to set up the connection between flink stream and postgres.
+18. And then we are going to sync the data into elasticsearch.
+19. So here we are storing real-time data coming from kafka topic into postgres.
+20. One thing that we can say is, pyspark structured streaming is a micro-batching approach.
+21. In structured streaming, a large set of data is batched in a very small size of batch and that batched data is getting inserted into the sink at a give duration.
+22. So pyspark structured streaming is not accurately real-time, But it's near real time process.
+23. But that is not the case with flink. Flink copies the data from source to sink at a real time. No micro-batching patterns in flink.
+24. So in this project we are taking the data from kafka source. Flink processes the data and dumps it into the postgres which is playing a role of data warehouse.
+25. So in postgres data, we will have a data being developed in day, month and category. So we will have sales per day month and category.
 
 ## Additional Resources
 
