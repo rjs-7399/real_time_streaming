@@ -13,16 +13,34 @@ def generate_sales_transactions():
 
     return {
         "transactionId": fake.uuid4(),
-        "productId": random.choice(['product1', 'product2', 'product3', 'product4', 'product5', 'product6']),
-        "productName": random.choice(['laptop', 'mobile', 'tablate', 'watch', 'headphone', 'speaker']),
-        "productCategory": random.choice(['electronic', 'fashion', 'grocery', 'home', 'beauty', 'sports']),
+        "productId": random.choice([
+            'TECH-LAP-001', 'TECH-MOB-002', 'TECH-TAB-003', 'TECH-WTC-004', 'TECH-AUD-005',
+            'TECH-SPK-006', 'TECH-MON-007', 'TECH-KEY-008', 'TECH-MOU-009', 'TECH-PRN-010',
+            'TECH-CAM-011', 'TECH-MIC-012', 'TECH-GAM-013', 'TECH-PWR-014', 'TECH-CHG-015'
+        ]),
+        "productName": random.choice([
+            'MacBook Pro 16"', 'iPhone 15 Pro', 'iPad Air 5th Gen', 'Galaxy Watch 6',
+            'Sony WH-1000XM5', 'JBL Flip 6', 'Dell 27" 4K Monitor', 'Logitech MX Keys',
+            'Logitech MX Master 3', 'HP LaserJet Pro', 'Logitech C920', 'Blue Yeti X',
+            'PlayStation 5', 'Anker 26800mAh', 'Samsung 15W Wireless Charger'
+        ]),
+        "productCategory": random.choice([
+            'Laptops', 'Smartphones', 'Tablets', 'Wearables', 'Audio',
+            'Computer Accessories', 'Gaming', 'Photography', 'Smart Home'
+        ]),
         "productPrice": round(random.uniform(10, 1000), 2),
         "productQuantity": random.randint(1, 10),
-        "productBrand": random.choice(['apple', 'samsung', 'oneplus', 'boat', 'sony']),
-        "currency": random.choice(['USD', 'INR', 'GBP']),
+        "productBrand": random.choice([
+            'Apple', 'Samsung', 'Sony', 'Dell', 'HP', 'Lenovo', 'LG',
+            'Logitech', 'JBL', 'Anker', 'Microsoft', 'Asus', 'Acer'
+        ]),
+        "currency": random.choice(['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD']),
         "customerId": user['username'],
         "transactionDate": datetime.utcnow().strftime('%Y-%m-%dT%H:%S.%f%z'),
-        "paymentMethod": random.choice(["credit_card", "debit_card", "online_transfer"]),
+        "paymentMethod": random.choice([
+            "credit_card", "debit_card", "paypal", "apple_pay",
+            "google_pay", "bank_transfer", "crypto"
+        ]),
     }
 
 def delivery_report(err, msg):
