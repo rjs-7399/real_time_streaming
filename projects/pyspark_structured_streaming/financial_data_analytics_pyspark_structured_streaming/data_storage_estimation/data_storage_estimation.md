@@ -25,10 +25,10 @@
 ## ⚙️ Kafka Compression & Replication
 Kafka uses JSON compression with configurable rates like Snappy/Gzip.
 
-| Compression | Replicas | Calculation | Data Size |
-|-------------|----------|-------------|-----------|
-| 5x         | 1        | (216/5) × 1 | 43 GB    |
-| 5x         | 3        | (216/5) × 3 | 129 GB   |
+| Compression  | Replicas | Calculation | Data Size |
+|--------------|----------|-------------|-----------|
+| 5x           | 1        | (216/5) × 1 | 43 GB     |
+| 5x           | 3        | (216/5) × 3 | 129 GB    |
 
 With Snappy/Gzip compression, we reduce the packet size significantly.
 
