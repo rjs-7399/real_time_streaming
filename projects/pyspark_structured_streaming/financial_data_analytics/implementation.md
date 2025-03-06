@@ -23,7 +23,8 @@ This document outlines the implementation details of our high-throughput Financi
 
 ## System Architecture
 
-![My profile picture](architecture/project_architecture.jpg)
+![project architecture](project_snapshots/project_architecture.jpg)
+
 The system architecture consists of a highly scalable financial data processing pipeline built on Kafka and PySpark, with comprehensive monitoring. The architecture includes:
 
 - **Kafka Cluster**: 3 Kafka controllers and 3 Kafka brokers for high availability and fault tolerance
@@ -35,6 +36,8 @@ The system architecture consists of a highly scalable financial data processing 
 This architecture is designed to handle financial transaction data at a massive scale, with the ability to process over 500 million records per hour.
 
 ## Key Services
+
+![Running Services](project_snapshots/all_services.jpg)
 
 ### Kafka Cluster
 
@@ -76,6 +79,8 @@ These estimates highlight the need for efficient compression, storage tiering, a
 
 ### Python Producer
 
+![python producer](project_snapshots/python_producer_production_rate.jpg)
+
 The Python producer implementation uses the confluent-kafka library but faces throughput limitations:
 
 - Single-threaded nature of Python's execution model limits throughput
@@ -84,6 +89,8 @@ The Python producer implementation uses the confluent-kafka library but faces th
 - Maximum output: ~28.66 million records/hour, far below the target of 1.2 billion
 
 ### Java Producer
+
+![java producer](project_snapshots/java_producer_production_rate.jpg)
 
 The Java implementation significantly outperforms Python due to:
 
@@ -120,20 +127,24 @@ The PySpark streaming job processes financial transaction data from Kafka:
 
 ### Performance Metrics
 
+![pyspark streaming performance](project_snapshots/pyspark_streaming_job_processing_rate.jpg)
+
 The PySpark job demonstrates exceptional throughput capabilities:
 
-- **153,657 records/second** processing rate
+- **153,499 records/second** processing rate
 - 1 million records in 6.5 seconds
-- 4.61 million records in 30 seconds
-- 9.23 million records in 1 minute
-- 46.13 million records in 5 minutes
-- **553.53 million records in 1 hour**
+- 4.60 million records in 30 seconds
+- 9.10 million records in 1 minute
+- 46.05 million records in 5 minutes
+- **552.60 million records in 1 hour**
 
 While this falls short of the 1.2 billion record/hour target, it represents significant throughput on local hardware. In a production environment with properly sized Kubernetes pods and optimized cloud infrastructure, the target would be achievable.
 
 ## Monitoring Setup
 
 ### Prometheus Configuration
+
+![prometheus configuration](project_snapshots/prometheus_configuration.jpg)
 
 Prometheus is configured to monitor Kafka and Spark metrics:
 
@@ -144,6 +155,8 @@ Prometheus is configured to monitor Kafka and Spark metrics:
 
 ### Grafana Dashboards
 
+![grafana dashboard](project_snapshots/grafana_dashboard.jpg)
+
 Grafana provides visualization of system metrics:
 
 - Preconfigured with Prometheus as a data source
@@ -152,6 +165,8 @@ Grafana provides visualization of system metrics:
 - Alerting based on performance thresholds
 
 ### ELK Stack Integration
+
+![elk monitoring](project_snapshots/ELK_stack_simple_dashboard.jpg)
 
 The ELK stack provides comprehensive log management:
 
