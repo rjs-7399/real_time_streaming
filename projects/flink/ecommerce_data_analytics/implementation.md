@@ -17,6 +17,8 @@ In an e-commerce environment where milliseconds matter (cart abandonment, person
 
 ## System Architecture
 
+![system architecture](project_snapshots/flink_ecommerce_architecture.jpg)
+
 The system architecture follows enterprise-grade patterns for real-time data processing in e-commerce environments:
 
 1. **Data Generation Layer**: E-commerce platform APIs generate event data (page views, clicks, cart actions, purchases) in real-time as customers interact with the platform
@@ -29,6 +31,8 @@ The system architecture follows enterprise-grade patterns for real-time data pro
 This architecture ensures robustness, scalability, and low latency—essential qualities for production e-commerce applications where business decisions rely on up-to-the-second data.
 
 ## Key Services
+
+![key services](project_snapshots/all_services.jpg)
 
 ### Apache Kafka
 - Functions as the central message broker and event backbone
@@ -74,6 +78,8 @@ This architecture ensures robustness, scalability, and low latency—essential q
 
 ## Flink Job Data Processing
 
+![Data Processing](project_snapshots/flink_processing.jpg)
+
 The core data processing logic is implemented in `DataStreamJob.java`, which orchestrates the real-time processing pipeline:
 
 ### Data Ingestion
@@ -99,7 +105,9 @@ The job applies several transformations to the raw event streams:
    - Average order value by user segment
    - Cart abandonment metrics
    - Product view-to-purchase ratios
-
+   - Sales per transaction (calculating total monetary value, item count, and discount metrics)
+   - Sales per day (using day-based tumbling windows with configurable timezone settings)
+   - Sales per month (implementing custom window assigners for month boundaries and fiscal periods)
 ### State Management
 The job maintains stateful operations for complex calculations:
 - Uses Flink's managed keyed state to track user sessions
@@ -107,6 +115,9 @@ The job maintains stateful operations for complex calculations:
 - Leverages RocksDB as the state backend for durability
 
 ### Output
+
+![Data Got Ingested In Postgres](project_snapshots/postgres_ingestion.jpg)
+
 Processed results are written to multiple sinks:
 1. PostgreSQL sink for transactional data using JDBC connector
 2. Elasticsearch sink for analytics data using the Elasticsearch connector
@@ -114,7 +125,40 @@ Processed results are written to multiple sinks:
 
 The job implements a custom monitoring framework that exposes processing metrics via Flink's metrics system, allowing operational visibility into throughput, latency, and backpressure.
 
+### Sales Metrics Processing
+
+![Postgres Table Categories](project_snapshots/postgres_ingestion_2.jpg)
+
+The job incorporates specialized logic for critical sales metrics:
+
+#### Per-Transaction Analysis
+
+- Processes individual order events with their line items.
+- Calculates transaction-level metrics like total value, tax, shipping costs, and margins
+- Detects anomalous transactions through statistical outlier detection
+- Tags transactions with promotion and discount attribution
+
+
+#### Daily Sales Aggregation
+
+- Implements 24-hour tumbling windows aligned to business days
+- Computes daily sales totals by product category, region, and customer segment
+- Maintains running comparisons to previous day, week, and year-over-year benchmarks
+- Updates daily sales targets and variance metrics in real-time
+
+
+#### Monthly Sales Reporting
+
+- Uses calendar month and configurable fiscal period windows
+- Builds hierarchical aggregations for product categories and geographic regions
+- Computes month-to-date progress against forecasts and budgets
+- Generates real-time month-end projections based on historical patterns and current trajectory
+
+- These metrics are maintained in Flink's state and exposed both to the persistence layer and through a dedicated monitoring dashboard.
+
 ## ELK Dashboard
+
+![Dashboard](project_snapshots/elk_dashboard.jpg)
 
 ### Elasticsearch Configuration
 Elasticsearch was configured with custom index templates to optimize for time-series e-commerce data:
@@ -124,6 +168,9 @@ Elasticsearch was configured with custom index templates to optimize for time-se
 - Configured index lifecycle policies to manage hot/warm/cold data tiers based on age
 
 ### Data Reindexing Strategy
+
+![Data Reindexing](project_snapshots/elk_reindexing.jpg)
+
 To optimize query performance, data was reindexed with the following approach:
 - Normalized timestamps to UTC to ensure consistent time-based queries
 - Created denormalized documents that combine related entities for faster retrieval
