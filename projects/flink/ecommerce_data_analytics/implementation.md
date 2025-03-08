@@ -3,7 +3,7 @@
 This project implements a scalable, real-time data processing platform for e-commerce applications. It captures, processes, analyzes, and visualizes customer interactions and transactions as they occur, enabling immediate insights and actions. By leveraging a modern event-driven architecture with Apache Flink at its core, the platform delivers sub-second data processing capabilities critical for modern digital retail operations.
 
 
-## Why Flink
+## Why Flink ?
 
 Apache Flink was chosen over PySpark Structured Streaming for this project due to its true real-time processing capabilities. While PySpark Structured Streaming operates in micro-batches (near real-time), Flink processes each record individually the moment it arrives.
 
